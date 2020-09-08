@@ -1,0 +1,28 @@
+
+## Login to the registry
+az acr login --name registrywyp6405
+
+## Setting the azure account subscription
+az account set --subscription OTA-PRD-1341
+
+## Enable logging
+az provider register --namespace Microsoft.OperationsManagement
+az provider register --namespace Microsoft.OperationalInsights
+
+##create cluster and attach registry
+az aks create --resource-group teamResources --name team7cluster2 --node-count 1 enable-addons monitoring --generate-ssh-keys --attach-acr registrywyp6405
+
+## if required just attaching registry to cluster
+az aks update -n team7cluster2 -g teamResources --attach-acr registrywyp6405
+
+## Get credentials for cluster
+az aks get-credentials -g teamResources -n team7cluster2
+
+##Commits yaml file to cluster
+kubectl apply -f /home/codespace/workspace/openhack-containers/trips.yaml
+
+##Check services
+kubectl get service tripviewer
+
+##Check  for delpoyed pods 
+kubectl get pods
