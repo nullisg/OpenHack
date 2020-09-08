@@ -19,9 +19,9 @@ spec:
         image: registrywyp6405.azurecr.io/tripinsights/userprofile:1.0
         env:
           - name: SQL_USER
-            value: "sqladmin"
+            value: sqladminwYp6405
           - name: SQL_PASSWORD
-            value: "wYp6405zT1gi0Er5"
+            value: zT1gi0Er5
           - name: SQL_SERVER
             value: "sqlserverwyp6405.database.windows.net"
           - name: SQL_DBNAME
