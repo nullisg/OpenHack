@@ -19,7 +19,7 @@ az aks update -n team7cluster2 -g teamResources --attach-acr registrywyp6405
 az aks get-credentials -g teamResources -n team7cluster2
 
 ##Commits yaml file to cluster
-kubectl apply -f /home/codespace/workspace/openhack-containers/trips.yaml
+kubectl apply -f /home/codespace/openhack-containers/useprofile.yaml
 
 ##Check services
 kubectl get service tripviewer
