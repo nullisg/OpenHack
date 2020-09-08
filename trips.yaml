@@ -26,6 +26,15 @@ spec:
             memory: 256Mi
         ports:
         - containerPort: 80
+        env:
+        - name: SQL_USER
+          value: sqladmin
+        - name: SQL_PASSWORD
+          value: wYp6405zT1gi0Er5
+        - name: SQL_SERVER
+          value: sqlserverwyp6405
+        - name: SQL_DBNAME
+          value: mydrivingDB
 ---
 apiVersion: v1
 kind: Service
