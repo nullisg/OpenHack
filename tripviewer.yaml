@@ -17,6 +17,11 @@ spec:
       containers:
       - name: tripviewer
         image: registrywyp6405.azurecr.io/tripinsights/tripviewer:1.0
+        env:
+          - name: USERPROFILE_API_ENDPOINT
+            value: "http://userprofile:80"
+          - name: TRIPS_API_ENDPOINT
+            value: "http://trips:80"
         resources:
           requests:
             cpu: 100m
