@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: poi
+        image: registrywyp6405.azurecr.io/tripinsights/poi:1.0
+        env:
+        - name: SQL_USER
+          value: "sqladmin"
+        - name: SQL_PASSWORD
+          value: "wYp6405zT1gi0Er5"
+        - name: SQL_SERVER
+          value: "sqlserverwyp6405.database.windows.net"
+        - name: SQL_DBNAME
+          value: "mydrivingDB"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poi
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: poi
