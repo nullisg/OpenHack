@@ -1,22 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trips
+  name: tripviewer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: trips
+      app: tripviewer
   template:
     metadata:
       labels:
-        app: trips
+        app: tripviewer
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: trips
-        image: registrywyp6405.azurecr.io/tripinsights/trips:1.0
+      - name: tripviewer
+        image: registrywyp6405.azurecr.io/tripinsights/tripviewer:1.0
+        env:
+          - name: SQL_USER
+            value: "sqladmin"
+          - name: SQL_PASSWORD
+            value: "wYp6405zT1gi0Er5"
+          - name: SQL_SERVER
+            value: "sqlserverwyp6405.database.windows.net"
+          - name: SQL_DBNAME
+            value: "mydrivingDB"
         resources:
           requests:
             cpu: 100m
@@ -26,22 +35,13 @@ spec:
             memory: 256Mi
         ports:
         - containerPort: 80
-        env:
-        - name: SQL_USER
-          value: sqladmin
-        - name: SQL_PASSWORD
-          value: wYp6405zT1gi0Er5
-        - name: SQL_SERVER
-          value: sqlserverwyp6405
-        - name: SQL_DBNAME
-          value: mydrivingDB
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: trips
+  name: tripviewer
 spec:
   ports:
   - port: 80
   selector:
-    app: trips
+    app: tripviewer
