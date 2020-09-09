@@ -10,7 +10,7 @@ az provider register --namespace Microsoft.OperationsManagement
 az provider register --namespace Microsoft.OperationalInsights
 
 ##create cluster and attach registry
-az aks create --resource-group teamResources --name team7cluster2 --node-count 1 enable-addons monitoring --generate-ssh-keys --attach-acr registrywyp6405
+az aks create --resource-group teamResources --name team7cluster2 --node-count 1 --enable-addons monitoring --generate-ssh-keys --attach-acr registrywyp6405
 
 ## if required just attaching registry to cluster
 az aks update -n team7cluster2 -g teamResources --attach-acr registrywyp6405
@@ -26,3 +26,34 @@ kubectl get service tripviewer
 
 ##Check  for delpoyed pods 
 kubectl get pods
+
+## get subnet id
+az network vnet subnet list \
+    --resource-group teamResources \
+    --vnet-name vnet \
+    --query "[1].id" --output tsv
+
+## Subnet ID
+/subscriptions/1e7981c6-d377-4999-90a2-2c64d09ed301/resourceGroups/teamResources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/team7subnet
+
+## create cluster with ad enabled
+az aks create -g teamResources -n team7ManagedCluster2 --enable-aad --aad-admin-group-object-ids 298b8e0e-efaa-443b-a66a-6dd6b3087e50 --aad-tenant-id 542bdc0c-1ecd-40cf-8ea0-8b42e1319ed0     --network-plugin azure \
+    --vnet-subnet-id /subscriptions/1e7981c6-d377-4999-90a2-2c64d09ed301/resourceGroups/teamResources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/team7subnet \
+    --docker-bridge-address 172.17.0.1/16 \
+    --dns-service-ip 10.2.4.10 \
+    --service-cidr 10.2.4.0/24 \
+    --node-count 3 \
+    --enable-addons monitoring \
+    --generate-ssh-keys \
+    --attach-acr registrywyp6405 
+
+
+## Get credentials for cluster
+az aks get-credentials -g teamResources -n team7ManagedCluster2
+
+kubectl run curl --image=radial/busyboxplus:curl -i --tty3
+
+#Create Azure AD User
+az ad user create --display-name 
+                  --password
+                  --user-principal-name
