@@ -37,7 +37,9 @@ kind: Service
 metadata:
   name: tripviewer
 spec:
-  ports:
-  - port: 80
   selector:
     app: tripviewer
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
