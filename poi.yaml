@@ -18,14 +18,14 @@ spec:
       - name: poi
         image: registrywyp6405.azurecr.io/tripinsights/poi:1.0
         env:
-        - name: SQL_USER
-          value: "sqladmin"
-        - name: SQL_PASSWORD
-          value: "wYp6405zT1gi0Er5"
-        - name: SQL_SERVER
-          value: "sqlserverwyp6405.database.windows.net"
-        - name: SQL_DBNAME
-          value: "mydrivingDB"
+          - name: SQL_USER
+            value: sqladminwYp6405
+          - name: SQL_PASSWORD
+            value: zT1gi0Er5
+          - name: SQL_SERVER
+            value: "sqlserverwyp6405.database.windows.net"
+          - name: SQL_DBNAME
+            value: "mydrivingDB"
         resources:
           requests:
             cpu: 100m

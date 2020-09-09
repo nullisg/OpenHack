@@ -1,31 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: userprofile
+  name: user-java
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: userprofile
+      app: user-java
   template:
     metadata:
       labels:
-        app: userprofile
+        app: user-java
     spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: userprofile
-        image: registrywyp6405.azurecr.io/tripinsights/userprofile:1.0
-        env:
-          - name: SQL_USER
-            value: sqladminwYp6405
-          - name: SQL_PASSWORD
-            value: zT1gi0Er5
-          - name: SQL_SERVER
-            value: "sqlserverwyp6405.database.windows.net"
-          - name: SQL_DBNAME
-            value: "mydrivingDB"
+      - name: userjava
+        image: registrywyp6405.azurecr.io/tripinsights/user-java:1.0
         resources:
           requests:
             cpu: 100m
@@ -35,13 +26,22 @@ spec:
             memory: 256Mi
         ports:
         - containerPort: 80
+        env:
+          - name: SQL_USER
+            value: sqladminwYp6405
+          - name: SQL_PASSWORD
+            value: zT1gi0Er5
+          - name: SQL_SERVER
+            value: "sqlserverwyp6405.database.windows.net"
+          - name: SQL_DBNAME
+            value: "mydrivingDB"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: userprofile
+  name: user-java
 spec:
   ports:
   - port: 80
   selector:
-    app: userprofile
+    app: user-java
